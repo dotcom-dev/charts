@@ -24,3 +24,5 @@ helm package charts/deployer
 
 Guides followed to create this repository:
 - [Host your Helm Chart Repo on GitHub](https://tealfeed.com/host-helm-chart-repo-github-n1nly)
+
+Check this template for more information: [helm-template](https://github.com/bitnami/charts/tree/main/template)
