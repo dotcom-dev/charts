@@ -5,8 +5,8 @@
 ## TL;DR
 
 ```bash
-$ helm repo add gamote https://gamote.github.io/charts
-$ helm install my-release gamote/deployer
+$ helm repo add dotcom https://dotcom.github.io/charts
+$ helm install my-release dotcom/deployer
 ```
 
 ## Introduction
@@ -22,8 +22,8 @@ $ helm install my-release gamote/deployer
 To install the chart with the release name `my-release`:
 
 ```bash
-$ helm repo add gamote https://gamote.github.io/charts
-$ helm install my-release gamote/deployer
+$ helm repo add dotcom https://gamote.github.io/charts
+$ helm install my-release dotcom/deployer
 ```
 
 ## Uninstalling the Chart
