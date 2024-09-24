@@ -5,7 +5,7 @@
 ## TL;DR
 
 ```bash
-$ helm repo add dotcom https://dotcom.github.io/charts
+$ helm repo add dotcom https://dotcom-dev.github.io/charts
 $ helm install my-release dotcom/deployer
 ```
 
@@ -22,7 +22,7 @@ $ helm install my-release dotcom/deployer
 To install the chart with the release name `my-release`:
 
 ```bash
-$ helm repo add dotcom https://dotcom.github.io/charts
+$ helm repo add dotcom https://dotcom-dev.github.io/charts
 $ helm install my-release dotcom/deployer
 ```
 

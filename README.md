@@ -5,7 +5,7 @@ Applications and libraries, ready to launch on Kubernetes using [Kubernetes Helm
 ## TL;DR
 
 ```bash
-$ helm repo add dotcom https://dotcom.github.io/charts
+$ helm repo add dotcom https://dotcom-dev.github.io/charts
 $ helm repo update
 $ helm search repo dotcom
 $ helm install my-release dotcom/<chart>
