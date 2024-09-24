@@ -1,14 +1,14 @@
-# The Gamote Library for Kubernetes
+# The DotCom Library for Kubernetes
 
-Applications and libraries, provided by [Gamote](https://github.com/Gamote), ready to launch on Kubernetes using [Kubernetes Helm](https://github.com/helm/helm).
+Applications and libraries, ready to launch on Kubernetes using [Kubernetes Helm](https://github.com/helm/helm).
 
 ## TL;DR
 
 ```bash
-$ helm repo add gamote https://gamote.github.io/charts
+$ helm repo add dotcom https://dotcom.github.io/charts
 $ helm repo update
-$ helm search repo gamote
-$ helm install my-release gamote/<chart>
+$ helm search repo dotcom
+$ helm install my-release dotcom/<chart>
 ```
 
 ## Notes
