@@ -58,15 +58,29 @@ spec:
         {{- if .Values.sidecars }}
         {{- toYaml .Values.sidecars | nindent 8 }}
         {{- end }}
-#      {{- with .Values.nodeSelector }}
-#      nodeSelector:
-#        {{- toYaml . | nindent 8 }}
-#      {{- end }}
-#      {{- with .Values.affinity }}
-#      affinity:
-#        {{- toYaml . | nindent 8 }}
-#      {{- end }}
-#      {{- with .Values.tolerations }}
-#      tolerations:
-#        {{- toYaml . | nindent 8 }}
-#      {{- end }}
+      {{- with .Values.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- range . }}
+        - maxSkew: {{ default $.Values.defaultTopologySpreadConstraints.maxSkew .maxSkew }}
+          topologyKey: {{ required "topologyKey is required!" .topologyKey }}
+          whenUnsatisfiable: {{ default $.Values.defaultTopologySpreadConstraints.whenUnsatisfiable .whenUnsatisfiable }}
+          labelSelector:
+            matchLabels:
+              {{- include "helpers.selectorLabels" $ | nindent 16 }}
+              {{- with .additionalLabels }}
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
+        {{- end }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
