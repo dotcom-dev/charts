@@ -61,9 +61,19 @@ spec:
       {{- with .Values.topologySpreadConstraints }}
       topologySpreadConstraints:
         {{- range . }}
-        - maxSkew: {{ default $.Values.defaultTopologySpreadConstraints.maxSkew .maxSkew }}
+        - maxSkew:
+            {{- if $.Values.defaultTopologySpreadConstraints }}
+            {{ default $.Values.defaultTopologySpreadConstraints.maxSkew .maxSkew }}
+            {{- else }}
+            {{ .maxSkew | default 1 }}
+            {{- end }}
           topologyKey: {{ required "topologyKey is required!" .topologyKey }}
-          whenUnsatisfiable: {{ default $.Values.defaultTopologySpreadConstraints.whenUnsatisfiable .whenUnsatisfiable }}
+          whenUnsatisfiable:
+            {{- if $.Values.defaultTopologySpreadConstraints }}
+            {{ default $.Values.defaultTopologySpreadConstraints.whenUnsatisfiable .whenUnsatisfiable }}
+            {{- else }}
+            {{ .whenUnsatisfiable | default "DoNotSchedule" }}
+            {{- end }}
           labelSelector:
             matchLabels:
               {{- include "helpers.selectorLabels" $ | nindent 16 }}
