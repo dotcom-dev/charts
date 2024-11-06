@@ -1,5 +1,6 @@
 {{- if .Values.additionalServices }}
 {{- range .Values.additionalServices }}
+---
 apiVersion: v1
 kind: Service
 metadata:
