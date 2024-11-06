@@ -1,0 +1,15 @@
+{{- if .Values.additionalServices }}
+{{- range .Values.additionalServices }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .name }}
+spec:
+  type: {{ .type | default "ExternalName" }}
+  externalName: {{ .externalName }}
+  ports:
+    {{- range .ports }}
+    - port: {{ .port }}
+    {{- end }}
+{{- end }}
+{{- end }}
