@@ -40,17 +40,35 @@ spec:
       http:
         paths:
           {{- range .paths }}
-          - path: {{ .path }}
+          - path: {{ default "/" .path }}
             {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
             pathType: {{ .pathType }}
+            {{- else }}
+            pathType: ImplementationSpecific
             {{- end }}
             backend:
+              {{- if and .backend .backend.service }}
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
                 name: {{ .backend.service.name | default $fullName }}
                 port:
                   number: {{ .backend.service.port.number | default $svcPort }}
               {{- else }}
+              service:
+                name: {{ .backend.service.name | default $fullName }}
+                port: {{ .backend.service.port.number | default $svcPort }}
+              {{- end }}
+              {{- else }}
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+              {{- else }}
+              service:
+                name: {{ $fullName }}
+                port: {{ $svcPort }}
+              {{- end }}
               {{- end }}
           {{- end }}
     {{- end }}
