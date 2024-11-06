@@ -8,9 +8,7 @@
   {{- end }}
 {{- end }}
 
-# TODO: add a version check (e.g. "if semverCompare ">=1.19-0"")
 apiVersion: networking.k8s.io/v1
-
 kind: Ingress
 metadata:
   name: {{ $fullName }}
@@ -49,9 +47,17 @@ spec:
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: {{ .backend.service.name | default $fullName }}
+                name: {{- if .backend.service.name -}}
+                  {{ .backend.service.name }}
+                {{- else -}}
+                  {{ $fullName }}
+                {{- end }}
                 port:
-                  number: {{ .backend.service.port.number | default $svcPort }}
+                  number: {{- if .backend.service.port.number -}}
+                    {{ .backend.service.port.number }}
+                  {{- else -}}
+                    {{ $svcPort }}
+                  {{- end }}
               {{- else }}
               {{- end }}
           {{- end }}
