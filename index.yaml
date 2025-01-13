@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   deployer:
   - apiVersion: v2
+    appVersion: 0.2.2
+    created: "2025-01-13T08:13:29.125102095Z"
+    description: A Helm chart for deploying API services using Kubernetes
+    digest: 3fe4357f3003dee874fd13536ec2abeb9bb34b035abe125791e0300380fe616e
+    name: deployer
+    type: application
+    urls:
+    - https://github.com/dotcom-dev/charts/releases/download/deployer-0.2.2/deployer-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
     appVersion: 0.2.1
     created: "2024-11-06T13:49:57.775928684Z"
     description: A Helm chart for deploying API services using Kubernetes
@@ -131,4 +141,4 @@ entries:
     urls:
     - https://github.com/dotcom-dev/charts/releases/download/deployer-0.0.1/deployer-0.0.1.tgz
     version: 0.0.1
-generated: "2024-11-06T13:49:57.776024422Z"
+generated: "2025-01-13T08:13:29.125454417Z"
