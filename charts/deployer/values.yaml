@@ -126,3 +126,6 @@ ingress:
 #        - chart-example.local
 
 additionalIngresses: []
+
+networkPolicy:
+  enabled: false
