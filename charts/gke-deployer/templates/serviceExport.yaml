@@ -1,0 +1,11 @@
+{{- if .Values.serviceExport.enabled }}
+kind: ServiceExport
+apiVersion: net.gke.io/v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.nameOverride }}
+  namespace: {{ .Values.serviceExport.namespace | default .Values.nameOverride }}
+  {{- if .Values.serviceExport.annotations }}
+  annotations:
+    {{- toYaml .Values.serviceExport.annotations | nindent 4 }}
+  {{- end }}
+{{- end }}
