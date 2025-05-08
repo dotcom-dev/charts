@@ -50,47 +50,47 @@ The command removes all the Kubernetes components associated with the chart and 
 ### Service Parameters
 
 
-| Name                 | Description                                  | Default         |
-|----------------------|----------------------------------------------|-----------------|
-| `service.enabled`    | Enable Service creation                      | `true`          |
-| `service.type`       | Service type                                 | `ClusterIP`     |
-| `service.port`       | Service port                                 | `3000`          |
-| `service.annotations`| Service annotations                          | `{}`            |
+| Name                  | Description             | Default     |
+|-----------------------|-------------------------|-------------|
+| `service.enabled`     | Enable Service creation | `true`      |
+| `service.type`        | Service type            | `ClusterIP` |
+| `service.port`        | Service port            | `3000`      |
+| `service.annotations` | Service annotations     | `{}`        |
 
 
 ### HTTPRoute Parameters (Gateway API)
 
-| Name                           | Description                                    | Default         |
-|--------------------------------|------------------------------------------------|-----------------|
-| `httpRoute.enabled`            | Enable HTTPRoute creation                      | `false`         |
-| `httpRoute.namespace`          | HTTPRoute namespace                            | Release namespace |
-| `httpRoute.gatewayName`        | Referenced gateway name                        | `""`            |
-| `httpRoute.gatewayNamespace`   | Referenced gateway namespace                   | `""`            |
-| `httpRoute.hostname`           | Route hostname                                 | `""`            |
+| Name                         | Description                  | Default           |
+|------------------------------|------------------------------|-------------------|
+| `httpRoute.enabled`          | Enable HTTPRoute creation    | `false`           |
+| `httpRoute.namespace`        | HTTPRoute namespace          | Release namespace |
+| `httpRoute.gatewayName`      | Referenced gateway name      | `""`              |
+| `httpRoute.gatewayNamespace` | Referenced gateway namespace | `""`              |
+| `httpRoute.hostname`         | Route hostname               | `""`              |
 
 
 ### Multi-Cluster Service Parameters
 
 
-| Name                           | Description                                    | Default         |
-|--------------------------------|------------------------------------------------|-----------------|
-| `serviceExport.enabled`        | Enable ServiceExport for multi-cluster services| `false`         |
-| `serviceExport.namespace`      | ServiceExport namespace                        | nameOverride value |
-| `serviceExport.annotations`    | ServiceExport annotations                      | `{}`            |
+| Name                        | Description                                     | Default            |
+|-----------------------------|-------------------------------------------------|--------------------|
+| `serviceExport.enabled`     | Enable ServiceExport for multi-cluster services | `false`            |
+| `serviceExport.namespace`   | ServiceExport namespace                         | nameOverride value |
+| `serviceExport.annotations` | ServiceExport annotations                       | `{}`               |
 
 
 ### Infisical Secret CRD Parameters
 
 
-| Name                           | Description                                       | Default         |
-|--------------------------------|---------------------------------------------------|-----------------|
-| `infisicalSecretCRD.enabled`   | Enable Infisical Secret CRD creation              | `false`         |
-| `infisicalSecretCRD.namespace` | Infisical Secret CRD namespace                    | Release namespace |
-| `infisicalSecretCRD.resyncInterval` | Secret resync interval in seconds - we only recommend going to very low values for debugging the auth flow of your infisical secret CRD            | `60`            |
-| `infisicalSecretCRD.authentication.universalAuth.credentialsRef` | Credentials reference | `{}`      |
-| `infisicalSecretCRD.managedKubeSecretReferences` | Managed Kubernetes secret references | `[]`       |
-| `infisicalSecretCRD.universalAuth.credentialsRef.secretsScope.envSlug`| slug of the environment within your infisical project | `"dev"` |
-| `infisicalSecretCRD.universalAuth.credentialsRef.secretsScope.projectSlug`| slug of your infisical project. You can get it from the "project Settings" tab in the infisical web UI | `"dev"` |
+| Name                                                                       | Description                                                                                                                             | Default           |
+|----------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|-------------------|
+| `infisicalSecretCRD.enabled`                                               | Enable Infisical Secret CRD creation                                                                                                    | `false`           |
+| `infisicalSecretCRD.namespace`                                             | Infisical Secret CRD namespace                                                                                                          | Release namespace |
+| `infisicalSecretCRD.resyncInterval`                                        | Secret resync interval in seconds - we only recommend going to very low values for debugging the auth flow of your infisical secret CRD | `60`              |
+| `infisicalSecretCRD.authentication.universalAuth.credentialsRef`           | Credentials reference                                                                                                                   | `{}`              |
+| `infisicalSecretCRD.managedKubeSecretReferences`                           | Managed Kubernetes secret references                                                                                                    | `[]`              |
+| `infisicalSecretCRD.universalAuth.credentialsRef.secretsScope.envSlug`     | slug of the environment within your infisical project                                                                                   | `"dev"`           |
+| `infisicalSecretCRD.universalAuth.credentialsRef.secretsScope.projectSlug` | slug of your infisical project. You can get it from the "project Settings" tab in the infisical web UI                                  | `"dev"`           |
 
 
 
