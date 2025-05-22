@@ -1,0 +1,17 @@
+{{- if .Values.gmp.enabled }}
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring
+metadata:
+  name: {{ include "helpers.fullName" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "helpers.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "helpers.selectorLabels" . | nindent 6 }}
+  endpoints:
+    - port: http
+      interval: {{ .Values.gmp.interval }}
+      path: {{ .Values.gmp.path }}
+{{- end }}

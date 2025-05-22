@@ -129,3 +129,13 @@ additionalIngresses: []
 
 networkPolicy:
   enabled: false
+
+#
+# Google Managed Prometheus (GMP) monitoring
+#
+gmp:
+  enabled: false
+  # Path to scrape metrics from
+  path: /metrics
+  # Scraping interval
+  interval: 30s

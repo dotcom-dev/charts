@@ -101,3 +101,12 @@ The following components are at play:
 - a k8s `secret` containing the `clientID` and `clientSecret` of an infisical [machine identity](https://infisical.com/docs/documentation/platform/identities/machine-identities) which has access to your team's infisical projects. This should be referenced here but provisioned by making a PR [here](https://github.com/dotcom-dev/gowish-infrastructure/blob/main/tf_new_setup/2-projects/gowish_devx/terraform.tfvars). (As of 06MAY25) Ask the cloud engineers how this is done.
 - a `managedKubeSecretReferences`: this is where your infisical secrets will actually be stored.
 By default, all of these things should be in the same namespace as your app.
+
+
+### Google Managed Prometheus (GMP) Monitoring Parameters
+
+| Name           | Description                                              | Default    |
+|----------------|----------------------------------------------------------|------------|
+| `gmp.enabled`  | Enable PodMonitoring resource creation for GMP           | `false`    |
+| `gmp.path`     | Path to scrape metrics from                              | `/metrics` |
+| `gmp.interval` | Scraping interval                                        | `30s`      |
