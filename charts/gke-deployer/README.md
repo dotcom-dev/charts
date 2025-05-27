@@ -94,7 +94,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 
 
-#### how the InfisicalSecret CRD works
+#### How the InfisicalSecret CRD works
 
 The following components are at play:
 - the CRD resource itself (provisioned by this Helm chart) 
