@@ -17,6 +17,6 @@ spec:
       - group: net.gke.io
         kind: ServiceImport
         name: {{ include "helpers.fullName" . }}
-        port: {{ .Values.containerPort }}
+        port: {{ .Values.service.port }}
 {{- end }}
 
