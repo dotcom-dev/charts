@@ -139,3 +139,6 @@ gmp:
   path: /metrics
   # Scraping interval
   interval: 30s
+  # Port to scrape metrics from (can be a name or a number)
+  # If not specified, the 'http' port will be used
+  port: http

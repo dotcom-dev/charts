@@ -11,7 +11,7 @@ spec:
     matchLabels:
       {{- include "helpers.selectorLabels" . | nindent 6 }}
   endpoints:
-    - port: http
+    - port: {{ .Values.gmp.port }}
       interval: {{ .Values.gmp.interval }}
       path: {{ .Values.gmp.path }}
 {{- end }}
