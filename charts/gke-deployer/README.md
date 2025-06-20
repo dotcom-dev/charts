@@ -103,6 +103,14 @@ The following components are at play:
 By default, all of these things should be in the same namespace as your app.
 
 
+### Pod Disruption Budget Parameters
+
+| Name                                 | Description                                                        | Default |
+|--------------------------------------|--------------------------------------------------------------------|---------|
+| `podDisruptionBudget.enabled`        | Enable PodDisruptionBudget resource creation                       | `false` |
+| `podDisruptionBudget.minAvailable`   | Minimum number of pods that must be available during a disruption  | `nil`   |
+| `podDisruptionBudget.maxUnavailable` | Maximum number of pods that can be unavailable during a disruption | `nil`   |
+
 ### Google Managed Prometheus (GMP) Monitoring Parameters
 
 | Name           | Description                                              | Default    |
