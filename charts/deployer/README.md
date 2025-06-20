@@ -38,6 +38,10 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Parameters
 
-| Name   | Description | Value   |
-|--------|-------------|---------|
-| `todo` | To replace  | `value` |
+### Pod Disruption Budget Parameters
+
+| Name                                 | Description                                                        | Default |
+|--------------------------------------|--------------------------------------------------------------------|---------|
+| `podDisruptionBudget.enabled`        | Enable PodDisruptionBudget resource creation                       | `false` |
+| `podDisruptionBudget.minAvailable`   | Minimum number of pods that must be available during a disruption  | `nil`   |
+| `podDisruptionBudget.maxUnavailable` | Maximum number of pods that can be unavailable during a disruption | `nil`   |

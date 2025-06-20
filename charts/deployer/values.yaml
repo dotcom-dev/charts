@@ -129,3 +129,12 @@ additionalIngresses: []
 
 networkPolicy:
   enabled: false
+
+#
+# Pod Disruption Budget
+#
+podDisruptionBudget:
+  enabled: false
+  # Specify either minAvailable or maxUnavailable, not both
+  # minAvailable: 1
+  # maxUnavailable: 1
