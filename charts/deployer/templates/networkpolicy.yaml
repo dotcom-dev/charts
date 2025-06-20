@@ -42,7 +42,8 @@ spec:
   {{- if .Values.networkPolicy.egress }}
   egress:
     {{- range .Values.networkPolicy.egress }}
-    - to:
+    - {{- if or .ipBlock .namespaceSelector .podSelector }}
+      to:
         {{- if .ipBlock }}
         - ipBlock:
             cidr: {{ .ipBlock.cidr | quote }}
@@ -63,6 +64,14 @@ spec:
             matchLabels:
               {{- toYaml .podSelector.matchLabels | nindent 14 }}
         {{- end }}
+      {{- end }}
+      {{- if .ports }}
+      ports:
+        {{- range .ports }}
+        - port: {{ .port }}
+          protocol: {{ .protocol }}
+        {{- end }}
+      {{- end }}
     {{- end }}
   {{- end }}
 {{- end }}
