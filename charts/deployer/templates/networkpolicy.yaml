@@ -15,7 +15,11 @@ spec:
   {{- if .Values.networkPolicy.ingress }}
   ingress:
     {{- range .Values.networkPolicy.ingress }}
-    - from:
+    - {{- if .from }}
+      from:
+        {{- toYaml .from | nindent 8 }}
+      {{- else }}
+      from:
         {{- if .ipBlock }}
         - ipBlock:
             cidr: {{ .ipBlock.cidr | quote }}
@@ -36,13 +40,17 @@ spec:
             matchLabels:
               {{- toYaml .podSelector.matchLabels | nindent 14 }}
         {{- end }}
+      {{- end }}
     {{- end }}
   {{- end }}
 
   {{- if .Values.networkPolicy.egress }}
   egress:
     {{- range .Values.networkPolicy.egress }}
-    - {{- if or .ipBlock .namespaceSelector .podSelector }}
+    - {{- if .to }}
+      to:
+        {{- toYaml .to | nindent 8 }}
+      {{- else if or .ipBlock .namespaceSelector .podSelector }}
       to:
         {{- if .ipBlock }}
         - ipBlock:
