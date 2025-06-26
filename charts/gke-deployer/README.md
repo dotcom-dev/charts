@@ -50,12 +50,14 @@ The command removes all the Kubernetes components associated with the chart and 
 ### Service Parameters
 
 
-| Name                  | Description             | Default     |
-|-----------------------|-------------------------|-------------|
-| `service.enabled`     | Enable Service creation | `true`      |
-| `service.type`        | Service type            | `ClusterIP` |
-| `service.port`        | Service port            | `3000`      |
-| `service.annotations` | Service annotations     | `{}`        |
+| Name                      | Description                                                 | Default     |
+|---------------------------|-------------------------------------------------------------|-------------|
+| `service.enabled`         | Enable Service creation                                     | `true`      |
+| `service.type`            | Service type                                                | `ClusterIP` |
+| `service.port`            | Service port                                                | `3000`      |
+| `service.annotations`     | Service annotations                                         | `{}`        |
+| `headlessService.enabled` | Enable headless service creation                            | `false`     |
+| `headlessService.port`    | Headless service port (defaults to service.port if not set) | `3000`      |
 
 
 ### HTTPRoute Parameters (Gateway API)

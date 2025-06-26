@@ -1,0 +1,22 @@
+{{- if .Values.headlessService.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "helpers.fullName" . }}-headless
+  labels:
+    {{- include "helpers.labels" . | nindent 4 }}
+  {{- if .Values.service.annotations }}
+  annotations:
+    {{- toYaml .Values.service.annotations | nindent 4 }}
+  {{- end }}
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - protocol: TCP
+      name: http
+      port: {{ .Values.headlessService.port | default .Values.service.port }}
+      targetPort: http
+  selector:
+    {{- include "helpers.selectorLabels" . | nindent 4 }}
+{{- end }}
