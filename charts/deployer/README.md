@@ -38,6 +38,16 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Parameters
 
+### Service Parameters
+
+| Name                      | Description                                                 | Default     |
+|---------------------------|-------------------------------------------------------------|-------------|
+| `service.enabled`         | Enable service resource creation                            | `true`      |
+| `service.type`            | Service type                                                | `ClusterIP` |
+| `service.port`            | Service port                                                | `80`        |
+| `headlessService.enabled` | Enable headless service creation                            | `false`     |
+| `headlessService.port`    | Headless service port (defaults to service.port if not set) | `80`        |
+
 ### Pod Disruption Budget Parameters
 
 | Name                                 | Description                                                        | Default |

@@ -99,6 +99,11 @@ service:
   type: ClusterIP
   port: 80
 
+# Headless service configuration
+headlessService:
+  enabled: false
+  # Port defaults to the same port as the regular service if not specified
+
 additionalServices: []
 
 #
