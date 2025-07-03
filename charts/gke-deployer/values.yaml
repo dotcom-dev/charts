@@ -159,3 +159,35 @@ gmp:
 
 httpRoute:
   enabled: false
+
+#
+# Jobs
+#
+jobs:
+  # Enable jobs creation
+  enabled: false
+  # Default API version for jobs
+  apiVersion: "batch/v1"
+  # Default kind for jobs (Job or CronJob)
+  kind: "CronJob"
+  # List of jobs to create
+  # You can specify just the job-specific configuration without repeating apiVersion and kind
+  # Example:
+  # - name: example-job
+  #   schedule: '0 */2 * * *'
+  #   containers:
+  #     - name: example
+  #       image: alpine:latest
+  #       command: ["echo", "Hello World"]
+  #   restartPolicy: OnFailure
+  #
+  # You can also override the default apiVersion and kind for specific jobs:
+  # - name: special-job
+  #   apiVersion: batch/v1beta1
+  #   kind: Job
+  #   containers:
+  #     - name: special
+  #       image: alpine:latest
+  #       command: ["echo", "Special job"]
+  #   restartPolicy: OnFailure
+  list: []

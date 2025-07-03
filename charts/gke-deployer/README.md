@@ -120,3 +120,87 @@ By default, all of these things should be in the same namespace as your app.
 | `gmp.enabled`  | Enable PodMonitoring resource creation for GMP           | `false`    |
 | `gmp.path`     | Path to scrape metrics from                              | `/metrics` |
 | `gmp.interval` | Scraping interval                                        | `30s`      |
+| `gmp.port`     | Port to scrape metrics from (can be a name or a number)  | `http`     |
+
+### Jobs Parameters
+
+| Name              | Description                            | Default    |
+|-------------------|----------------------------------------|------------|
+| `jobs.enabled`    | Enable Jobs creation                   | `false`    |
+| `jobs.apiVersion` | Default API version for jobs           | `batch/v1` |
+| `jobs.kind`       | Default kind for jobs (Job or CronJob) | `CronJob`  |
+| `jobs.list`       | List of job configurations             | `[]`       |
+
+#### Job Configuration
+
+The `jobs.list` parameter accepts a list of job configurations. Each job configuration can use a simplified format that doesn't require specifying `apiVersion` and `kind` for each job, as these values are inherited from the defaults.
+
+Basic job configuration fields:
+
+| Field                   | Description                                     | Required for CronJob | Required for Job |
+|-------------------------|-------------------------------------------------|----------------------|------------------|
+| `name`                  | Name of the job                                 | Yes                  | Yes              |
+| `apiVersion`            | API version (overrides default)                 | No                   | No               |
+| `kind`                  | Kind (Job or CronJob, overrides default)        | No                   | No               |
+| `schedule`              | Cron schedule expression                        | Yes                  | N/A              |
+| `concurrencyPolicy`     | Concurrency policy for CronJob                  | No                   | N/A              |
+| `containers`            | List of container specifications                | Yes                  | Yes              |
+| `restartPolicy`         | Restart policy for the pod                      | No                   | No               |
+| `activeDeadlineSeconds` | Active deadline in seconds                      | No                   | No               |
+| `metadata`              | Additional metadata (labels, annotations, etc.) | No                   | No               |
+| `additionalSpec`        | Additional pod spec fields                      | No                   | No               |
+| `additionalJobSpec`     | Additional job spec fields                      | No                   | No               |
+
+Example of a simple CronJob configuration:
+
+```yaml
+jobs:
+  enabled: true
+  list:
+    - name: refresh-cache
+      schedule: '0 */2 * * *'
+      containers:
+        - name: refresh
+          image: alpine/curl:3.14
+          args:
+            - '-X'
+            - 'POST'
+            - 'api-service:80/refresh-cache'
+      restartPolicy: OnFailure
+```
+
+Example of a Job configuration:
+
+```yaml
+jobs:
+  enabled: true
+  list:
+    - name: one-time-job
+      kind: Job
+      containers:
+        - name: task
+          image: alpine:latest
+          command: ["echo", "One-time job"]
+      restartPolicy: Never
+```
+
+Example with additional fields:
+
+```yaml
+jobs:
+  enabled: true
+  list:
+    - name: complex-job
+      schedule: '0 0 * * *'
+      metadata:
+        labels:
+          app: my-app
+      concurrencyPolicy: Forbid
+      containers:
+        - name: task
+          image: alpine:latest
+          command: ["echo", "Complex job"]
+      restartPolicy: OnFailure
+      additionalJobSpec:
+        successfulJobsHistoryLimit: 3
+```
