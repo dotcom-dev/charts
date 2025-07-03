@@ -124,37 +124,74 @@ By default, all of these things should be in the same namespace as your app.
 
 ### Jobs Parameters
 
-| Name              | Description                            | Default    |
-|-------------------|----------------------------------------|------------|
-| `jobs.enabled`    | Enable Jobs creation                   | `false`    |
-| `jobs.apiVersion` | Default API version for jobs           | `batch/v1` |
-| `jobs.kind`       | Default kind for jobs (Job or CronJob) | `CronJob`  |
-| `jobs.list`       | List of job configurations             | `[]`       |
+| Name                | Description                                | Default    |
+|---------------------|--------------------------------------------|------------|
+| `jobs.enabled`      | Enable Jobs creation                       | `false`    |
+| `jobs.apiVersion`   | API version for jobs                       | `batch/v1` |
+| `jobs.list`         | List of one-time job configurations        | `[]`       |
+
+### CronJobs Parameters
+
+| Name                  | Description                          | Default    |
+|-----------------------|--------------------------------------|------------|
+| `cronJobs.enabled`    | Enable CronJobs creation             | `false`    |
+| `cronJobs.apiVersion` | API version for cronJobs             | `batch/v1` |
+| `cronJobs.list`       | List of scheduled job configurations | `[]`       |
 
 #### Job Configuration
 
-The `jobs.list` parameter accepts a list of job configurations. Each job configuration can use a simplified format that doesn't require specifying `apiVersion` and `kind` for each job, as these values are inherited from the defaults.
+The chart now provides completely separate configurations for different types of jobs:
+- `jobs` for one-time jobs (Kubernetes Jobs)
+- `cronJobs` for scheduled jobs (Kubernetes CronJobs)
 
-Basic job configuration fields:
+This separation makes the configuration cleaner and more intuitive, with each job type having its own dedicated template file.
 
-| Field                   | Description                                     | Required for CronJob | Required for Job |
-|-------------------------|-------------------------------------------------|----------------------|------------------|
-| `name`                  | Name of the job                                 | Yes                  | Yes              |
-| `apiVersion`            | API version (overrides default)                 | No                   | No               |
-| `kind`                  | Kind (Job or CronJob, overrides default)        | No                   | No               |
-| `schedule`              | Cron schedule expression                        | Yes                  | N/A              |
-| `concurrencyPolicy`     | Concurrency policy for CronJob                  | No                   | N/A              |
-| `containers`            | List of container specifications                | Yes                  | Yes              |
-| `restartPolicy`         | Restart policy for the pod                      | No                   | No               |
-| `activeDeadlineSeconds` | Active deadline in seconds                      | No                   | No               |
-| `metadata`              | Additional metadata (labels, annotations, etc.) | No                   | No               |
-| `additionalSpec`        | Additional pod spec fields                      | No                   | No               |
-| `additionalJobSpec`     | Additional job spec fields                      | No                   | No               |
+##### One-time Job Configuration Fields
 
-Example of a simple CronJob configuration:
+| Field                   | Description                                     | Required |
+|-------------------------|-------------------------------------------------|----------|
+| `name`                  | Name of the job                                 | Yes      |
+| `apiVersion`            | API version (overrides default)                 | No       |
+| `containers`            | List of container specifications                | Yes      |
+| `restartPolicy`         | Restart policy for the pod                      | No       |
+| `activeDeadlineSeconds` | Active deadline in seconds                      | No       |
+| `metadata`              | Additional metadata (labels, annotations, etc.) | No       |
+| `additionalSpec`        | Additional pod spec fields                      | No       |
+| `additionalJobSpec`     | Additional job spec fields                      | No       |
+
+##### CronJob Configuration Fields
+
+| Field                   | Description                                     | Required |
+|-------------------------|-------------------------------------------------|----------|
+| `name`                  | Name of the job                                 | Yes      |
+| `apiVersion`            | API version (overrides default)                 | No       |
+| `schedule`              | Cron schedule expression                        | Yes      |
+| `concurrencyPolicy`     | Concurrency policy for CronJob                  | No       |
+| `containers`            | List of container specifications                | Yes      |
+| `restartPolicy`         | Restart policy for the pod                      | No       |
+| `activeDeadlineSeconds` | Active deadline in seconds                      | No       |
+| `metadata`              | Additional metadata (labels, annotations, etc.) | No       |
+| `additionalSpec`        | Additional pod spec fields                      | No       |
+| `additionalJobSpec`     | Additional job spec fields                      | No       |
+
+Example of a one-time Job configuration:
 
 ```yaml
 jobs:
+  enabled: true
+  list:
+    - name: one-time-job
+      containers:
+        - name: task
+          image: alpine:latest
+          command: ["echo", "One-time job"]
+      restartPolicy: Never
+```
+
+Example of a CronJob configuration:
+
+```yaml
+cronJobs:
   enabled: true
   list:
     - name: refresh-cache
@@ -169,25 +206,10 @@ jobs:
       restartPolicy: OnFailure
 ```
 
-Example of a Job configuration:
-
-```yaml
-jobs:
-  enabled: true
-  list:
-    - name: one-time-job
-      kind: Job
-      containers:
-        - name: task
-          image: alpine:latest
-          command: ["echo", "One-time job"]
-      restartPolicy: Never
-```
-
 Example with additional fields:
 
 ```yaml
-jobs:
+cronJobs:
   enabled: true
   list:
     - name: complex-job

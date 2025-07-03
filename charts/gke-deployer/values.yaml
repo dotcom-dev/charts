@@ -166,28 +166,33 @@ httpRoute:
 jobs:
   # Enable jobs creation
   enabled: false
-  # Default API version for jobs
+  # API version for jobs
   apiVersion: "batch/v1"
-  # Default kind for jobs (Job or CronJob)
-  kind: "CronJob"
-  # List of jobs to create
-  # You can specify just the job-specific configuration without repeating apiVersion and kind
+  # List of one-time jobs to create
   # Example:
-  # - name: example-job
+  # - name: one-time-job
+  #   containers:
+  #     - name: task
+  #       image: alpine:latest
+  #       command: ["echo", "One-time job"]
+  #   restartPolicy: Never
+  list: []
+
+#
+# CronJobs
+#
+cronJobs:
+  # Enable cronJobs creation
+  enabled: false
+  # API version for cronJobs
+  apiVersion: "batch/v1"
+  # List of scheduled jobs (CronJobs) to create
+  # Example:
+  # - name: scheduled-job
   #   schedule: '0 */2 * * *'
   #   containers:
-  #     - name: example
+  #     - name: task
   #       image: alpine:latest
-  #       command: ["echo", "Hello World"]
-  #   restartPolicy: OnFailure
-  #
-  # You can also override the default apiVersion and kind for specific jobs:
-  # - name: special-job
-  #   apiVersion: batch/v1beta1
-  #   kind: Job
-  #   containers:
-  #     - name: special
-  #       image: alpine:latest
-  #       command: ["echo", "Special job"]
+  #       command: ["echo", "Scheduled job"]
   #   restartPolicy: OnFailure
   list: []

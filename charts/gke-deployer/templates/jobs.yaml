@@ -2,7 +2,7 @@
 {{- range .Values.jobs.list }}
 ---
 apiVersion: {{ .apiVersion | default $.Values.jobs.apiVersion }}
-kind: {{ .kind | default $.Values.jobs.kind }}
+kind: Job
 metadata:
   name: {{ .name }}
   {{- if .metadata }}
@@ -11,27 +11,6 @@ metadata:
   {{- end }}
   {{- end }}
 spec:
-  {{- if eq (default $.Values.jobs.kind .kind) "CronJob" }}
-  schedule: {{ .schedule | quote }}
-  {{- if .concurrencyPolicy }}
-  concurrencyPolicy: {{ .concurrencyPolicy }}
-  {{- end }}
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-          {{- toYaml .containers | nindent 12 }}
-          {{- if .restartPolicy }}
-          restartPolicy: {{ .restartPolicy }}
-          {{- end }}
-          {{- if .activeDeadlineSeconds }}
-          activeDeadlineSeconds: {{ .activeDeadlineSeconds }}
-          {{- end }}
-          {{- with .additionalSpec }}
-          {{- toYaml . | nindent 10 }}
-          {{- end }}
-  {{- else }}
   template:
     spec:
       containers:
@@ -45,7 +24,6 @@ spec:
       {{- with .additionalSpec }}
       {{- toYaml . | nindent 6 }}
       {{- end }}
-  {{- end }}
   {{- with .additionalJobSpec }}
   {{- toYaml . | nindent 2 }}
   {{- end }}
