@@ -213,6 +213,17 @@ entries:
     version: 0.0.1
   gke-deployer:
   - apiVersion: v2
+    appVersion: 0.1.17
+    created: "2025-07-07T13:34:18.400814021Z"
+    description: A Helm chart for deploying API services using Kubernetes. Supports
+      multi-cluster deployments.
+    digest: 7be41a8c0d24bc916bd4f40d20b897d936ed2eaf9e37b8ae8d193ec839827b0a
+    name: gke-deployer
+    type: application
+    urls:
+    - https://github.com/dotcom-dev/charts/releases/download/gke-deployer-0.1.17/gke-deployer-0.1.17.tgz
+    version: 0.1.17
+  - apiVersion: v2
     appVersion: 0.1.16
     created: "2025-07-07T13:29:54.905262192Z"
     description: A Helm chart for deploying API services using Kubernetes. Supports
@@ -398,4 +409,4 @@ entries:
     urls:
     - https://github.com/dotcom-dev/charts/releases/download/gke-deployer-0.1.0/gke-deployer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-07T13:29:54.905387368Z"
+generated: "2025-07-07T13:34:18.40099047Z"
