@@ -7,7 +7,6 @@ metadata:
   name: {{ .name }}
   labels:
     {{- include "helpers.labels" $ | nindent 4 }}
-    region: {{ .region }}
 spec:
   type: {{ .type | default "ClusterIP" }}
   ports:
@@ -17,7 +16,6 @@ spec:
       targetPort: http
   selector:
     {{- include "helpers.selectorLabels" $ | nindent 4 }}
-    region: {{ .region }}
 {{- if .serviceExport.enabled }}
 ---
 kind: ServiceExport

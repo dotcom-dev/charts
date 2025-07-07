@@ -88,7 +88,6 @@ The command removes all the Kubernetes components associated with the chart and 
 |------------------------------------------------|---------------------------|-------------|
 | `regionalServices`                             | List of regional services | `[]`        |
 | `regionalServices[].name`                      | Service name              | `""`        |
-| `regionalServices[].region`                    | Service region            | `""`        |
 | `regionalServices[].type`                      | Service type              | `ClusterIP` |
 | `regionalServices[].serviceExport.enabled`     | Enable ServiceExport      | `false`     |
 | `regionalServices[].serviceExport.annotations` | ServiceExport annotations | `{}`        |
