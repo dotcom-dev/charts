@@ -14,9 +14,30 @@ spec:
     - {{ .Values.httpRoute.hostname | quote }}
   rules:
     - backendRefs:
+      # Default service (backward compatible)
+      {{- if and (not .Values.httpRoute.additionalBackends) (not (hasKey .Values.httpRoute "defaultWeight")) }}
       - group: net.gke.io
         kind: ServiceImport
         name: {{ include "helpers.fullName" . }}
         port: {{ .Values.service.port }}
+      {{- else }}
+      # Default service with weight (new behavior)
+      {{- if gt (.Values.httpRoute.defaultWeight | default 100) 0 }}
+      - group: net.gke.io
+        kind: ServiceImport
+        name: {{ include "helpers.fullName" . }}
+        port: {{ .Values.service.port }}
+        weight: {{ .Values.httpRoute.defaultWeight | default 100 }}
+      {{- end }}
+      # Additional backends
+      {{- range .Values.httpRoute.additionalBackends }}
+      {{- if gt .weight 0 }}
+      - group: net.gke.io
+        kind: ServiceImport
+        name: {{ .name }}
+        port: {{ $.Values.service.port }}
+        weight: {{ .weight }}
+      {{- end }}
+      {{- end }}
+      {{- end }}
 {{- end }}
-

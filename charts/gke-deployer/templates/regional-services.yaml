@@ -1,0 +1,33 @@
+{{- if .Values.regionalServices }}
+{{- range .Values.regionalServices }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .name }}
+  labels:
+    {{- include "helpers.labels" $ | nindent 4 }}
+    region: {{ .region }}
+spec:
+  type: {{ .type | default "ClusterIP" }}
+  ports:
+    - protocol: TCP
+      name: http
+      port: {{ $.Values.service.port }}
+      targetPort: http
+  selector:
+    {{- include "helpers.selectorLabels" $ | nindent 4 }}
+    region: {{ .region }}
+{{- if .serviceExport.enabled }}
+---
+kind: ServiceExport
+apiVersion: net.gke.io/v1
+metadata:
+  name: {{ .name }}
+  {{- if .serviceExport.annotations }}
+  annotations:
+    {{- toYaml .serviceExport.annotations | nindent 4 }}
+  {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

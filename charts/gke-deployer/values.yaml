@@ -107,6 +107,29 @@ headlessService:
 additionalServices: []
 
 #
+# Service Export (Multi-cluster services)
+#
+serviceExport:
+  enabled: false
+  annotations: {}
+
+#
+# Regional Services (for traffic distribution)
+#
+regionalServices: []
+# Example:
+# - name: eu-service
+#   region: eu
+#   serviceExport:
+#     enabled: true
+#     annotations: {}
+# - name: us-service
+#   region: us
+#   serviceExport:
+#     enabled: true
+#     annotations: {}
+
+#
 # Ingress
 #
 ingress:
@@ -159,6 +182,18 @@ gmp:
 
 httpRoute:
   enabled: false
+  gatewayName: ""
+  gatewayNamespace: ""
+  hostname: ""
+  # Default service weight (can be set to 0 to disable default service)
+  # defaultWeight: 100
+  # Additional backends with weights
+  additionalBackends: []
+  # Example:
+  # - name: eu-service
+  #   weight: 0
+  # - name: us-service  
+  #   weight: 0
 
 #
 # Jobs

@@ -62,23 +62,92 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### HTTPRoute Parameters (Gateway API)
 
-| Name                         | Description                  | Default           |
-|------------------------------|------------------------------|-------------------|
-| `httpRoute.enabled`          | Enable HTTPRoute creation    | `false`           |
-| `httpRoute.namespace`        | HTTPRoute namespace          | Release namespace |
-| `httpRoute.gatewayName`      | Referenced gateway name      | `""`              |
-| `httpRoute.gatewayNamespace` | Referenced gateway namespace | `""`              |
-| `httpRoute.hostname`         | Route hostname               | `""`              |
+| Name                                    | Description                           | Default |
+|-----------------------------------------|---------------------------------------|---------|
+| `httpRoute.enabled`                     | Enable HTTPRoute creation             | `false` |
+| `httpRoute.gatewayName`                 | Referenced gateway name               | `""`    |
+| `httpRoute.gatewayNamespace`            | Referenced gateway namespace          | `""`    |
+| `httpRoute.hostname`                    | Route hostname                        | `""`    |
+| `httpRoute.defaultWeight`               | Weight for default service            | `100`   |
+| `httpRoute.additionalBackends`          | List of additional backends           | `[]`    |
+| `httpRoute.additionalBackends[].name`   | Backend service name                  | `""`    |
+| `httpRoute.additionalBackends[].weight` | Backend weight                        | `0`     |
 
 
 ### Multi-Cluster Service Parameters
 
+| Name                        | Description                                     | Default |
+|-----------------------------|-------------------------------------------------|---------|
+| `serviceExport.enabled`     | Enable ServiceExport for multi-cluster services | `false` |
+| `serviceExport.annotations` | ServiceExport annotations                       | `{}`    |
 
-| Name                        | Description                                     | Default            |
-|-----------------------------|-------------------------------------------------|--------------------|
-| `serviceExport.enabled`     | Enable ServiceExport for multi-cluster services | `false`            |
-| `serviceExport.namespace`   | ServiceExport namespace                         | nameOverride value |
-| `serviceExport.annotations` | ServiceExport annotations                       | `{}`               |
+
+### Regional Services Parameters
+
+| Name                                           | Description               | Default     |
+|------------------------------------------------|---------------------------|-------------|
+| `regionalServices`                             | List of regional services | `[]`        |
+| `regionalServices[].name`                      | Service name              | `""`        |
+| `regionalServices[].region`                    | Service region            | `""`        |
+| `regionalServices[].type`                      | Service type              | `ClusterIP` |
+| `regionalServices[].serviceExport.enabled`     | Enable ServiceExport      | `false`     |
+| `regionalServices[].serviceExport.annotations` | ServiceExport annotations | `{}`        |
+
+#### Regional Services and Weighted Traffic Distribution
+
+The regional services feature allows you to create region-specific services with service exports and distribute traffic using weighted HTTPRoute backends. This is particularly useful for gradual traffic migration between regions.
+
+**Example: EU-first deployment with gradual US rollout**
+
+```yaml
+# Phase 1: EU only traffic
+serviceExport:
+  enabled: true
+
+httpRoute:
+  enabled: true
+  gatewayName: "my-gateway"
+  gatewayNamespace: "gateway-system"
+  hostname: "myapp.example.com"
+  defaultWeight: 0  # No traffic to default service
+  additionalBackends:
+    - name: eu-service
+      weight: 100  # All traffic to EU
+    - name: us-service
+      weight: 0    # No traffic to US
+
+regionalServices:
+  - name: eu-service
+    region: eu
+    serviceExport:
+      enabled: true
+  - name: us-service
+    region: us
+    serviceExport:
+      enabled: true
+```
+
+**Example: Gradual traffic migration (70% EU, 30% US)**
+
+```yaml
+httpRoute:
+  defaultWeight: 0
+  additionalBackends:
+    - name: eu-service
+      weight: 70
+    - name: us-service
+      weight: 30
+```
+
+**Example: Cleanup - back to default service**
+
+```yaml
+httpRoute:
+  defaultWeight: 100
+  additionalBackends: []
+
+regionalServices: []  # Remove regional services
+```
 
 
 ### Infisical Secret CRD Parameters
