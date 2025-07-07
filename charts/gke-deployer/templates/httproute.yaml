@@ -22,12 +22,16 @@ spec:
         port: {{ .Values.service.port }}
       {{- else }}
       # Default service with weight (new behavior)
-      {{- if gt (int (.Values.httpRoute.defaultWeight | default 100)) 0 }}
+      {{- $defaultWeight := 100 }}
+      {{- if hasKey .Values.httpRoute "defaultWeight" }}
+        {{- $defaultWeight = .Values.httpRoute.defaultWeight }}
+      {{- end }}
+      {{- if gt (int $defaultWeight) 0 }}
       - group: net.gke.io
         kind: ServiceImport
         name: {{ include "helpers.fullName" . }}
         port: {{ .Values.service.port }}
-        weight: {{ .Values.httpRoute.defaultWeight | default 100 }}
+        weight: {{ $defaultWeight }}
       {{- end }}
       # Additional backends
       {{- range .Values.httpRoute.additionalBackends }}
