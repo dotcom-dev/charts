@@ -60,6 +60,43 @@ The command removes all the Kubernetes components associated with the chart and 
 | `headlessService.port`    | Headless service port (defaults to service.port if not set) | `3000`      |
 
 
+### Health Check Policy Parameters (GKE)
+
+| Name                                            | Description                                                | Default   |
+|-------------------------------------------------|------------------------------------------------------------|-----------|
+| `healthCheckPolicy.enabled`                     | Enable HealthCheckPolicy creation                          | `false`   |
+| `healthCheckPolicy.httpHealthCheck.port`        | Port to check (defaults to service port if empty)          | `""`      |
+| `healthCheckPolicy.httpHealthCheck.requestPath` | Path to check for HTTP health checks                       | `/health` |
+| `healthCheckPolicy.checkIntervalSec`            | Interval between health checks in seconds                  | `10`      |
+| `healthCheckPolicy.timeoutSec`                  | Timeout for each health check in seconds                   | `5`       |
+| `healthCheckPolicy.healthyThreshold`            | Number of consecutive successful checks to mark as healthy | `1`       |
+| `healthCheckPolicy.unhealthyThreshold`          | Number of consecutive failed checks to mark as unhealthy   | `10`      |
+
+The Health Check Policy feature creates a GKE HealthCheckPolicy resource that configures HTTP load balancer health checks for your service. This is particularly useful for ensuring proper traffic routing and service availability in GKE environments.
+
+**Example: Enable basic HTTP health check**
+
+```yaml
+healthCheckPolicy:
+  enabled: true
+  httpHealthCheck:
+    requestPath: "/api/health"
+```
+
+**Example: Custom health check configuration**
+
+```yaml
+healthCheckPolicy:
+  enabled: true
+  httpHealthCheck:
+    port: 8080
+    requestPath: "/healthz"
+  checkIntervalSec: 15
+  timeoutSec: 3
+  healthyThreshold: 2
+  unhealthyThreshold: 5
+```
+
 ### HTTPRoute Parameters (Gateway API)
 
 | Name                                    | Description                           | Default |

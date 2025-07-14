@@ -234,6 +234,23 @@ cronJobs:
   list: []
 
 #
+# Health Check Policy (GKE)
+#
+healthCheckPolicy:
+  enabled: false
+  # Health check configuration (HTTP only for now)
+  httpHealthCheck:
+    # Port to check (defaults to service port if not specified)
+    port: ""
+    # Path to check
+    requestPath: "/health"
+  # Health check timing configuration
+  checkIntervalSec: 10
+  timeoutSec: 5
+  healthyThreshold: 1
+  unhealthyThreshold: 10
+
+#
 # Infisical Secret CRD
 #
 infisicalSecretCRD:
