@@ -113,7 +113,61 @@ healthCheckPolicy:
 | `httpRoute.additionalBackends`          | List of additional backends           | `[]`    |
 | `httpRoute.additionalBackends[].name`   | Backend service name                  | `""`    |
 | `httpRoute.additionalBackends[].weight` | Backend weight                        | `0`     |
+| `httpRoute.paths`                       | List of path matching rules           | `[]`    |
+| `httpRoute.paths[].path`                | Path to match                         | `""`    |
+| `httpRoute.paths[].type`                | Path match type (Exact, PathPrefix)  | `""`    |
 
+#### HTTPRoute Path Matching
+
+The HTTPRoute supports path-based routing to restrict which paths are matched by the route. This is useful when you want to route only specific API endpoints through the gateway, similar to how you would configure specific paths in an Ingress resource.
+
+**Path Match Types:**
+- `Exact`: Matches the path exactly
+- `PathPrefix`: Matches paths that start with the specified prefix
+
+**Backward Compatibility:** If no paths are specified, the HTTPRoute will match all paths (default behavior).
+
+**Example: Basic HTTPRoute without path restrictions (default behavior)**
+
+```yaml
+httpRoute:
+  enabled: true
+  gatewayName: "my-gateway"
+  gatewayNamespace: "gateway-system"
+  hostname: "myapp.example.com"
+```
+
+**Example: HTTPRoute with specific path matching**
+
+```yaml
+httpRoute:
+  enabled: true
+  gatewayName: "my-gateway"
+  gatewayNamespace: "gateway-system"
+  hostname: "product-api-v2.dev.gowish.com"
+  paths:
+    - path: "/api/integrations/rainforest-import-webhook"
+      type: "Exact"
+    - path: "/api/integrations/serpscale-import-shopping-webhook"
+      type: "Exact"
+    - path: "/api/integrations/serpscale-import-sellers-webhook"
+      type: "Exact"
+```
+
+**Example: HTTPRoute with path prefix matching**
+
+```yaml
+httpRoute:
+  enabled: true
+  gatewayName: "my-gateway"
+  gatewayNamespace: "gateway-system"
+  hostname: "myapp.example.com"
+  paths:
+    - path: "/api/v1"
+      type: "PathPrefix"
+    - path: "/health"
+      type: "Exact"
+```
 
 ### Multi-Cluster Service Parameters
 

@@ -13,7 +13,15 @@ spec:
   hostnames:
     - {{ .Values.httpRoute.hostname | quote }}
   rules:
-    - backendRefs:
+    - {{- if .Values.httpRoute.paths }}
+      matches:
+      {{- range .Values.httpRoute.paths }}
+      - path:
+          type: {{ .type }}
+          value: {{ .path | quote }}
+      {{- end }}
+      {{- end }}
+      backendRefs:
       # Default service (backward compatible)
       {{- if and (not .Values.httpRoute.additionalBackends) (not (hasKey .Values.httpRoute "defaultWeight")) }}
       - group: net.gke.io

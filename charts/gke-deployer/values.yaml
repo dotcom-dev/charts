@@ -195,6 +195,16 @@ httpRoute:
   #   weight: 0
   # - name: us-service  
   #   weight: 0
+  # Path matching configuration (optional)
+  # If not specified, all paths will be matched (backward compatible)
+  paths: []
+  # Example:
+  # - path: "/api/integrations/rainforest-import-webhook"
+  #   type: "Exact"
+  # - path: "/api/integrations/serpscale-import-shopping-webhook"
+  #   type: "Exact"
+  # - path: "/api/integrations/serpscale-import-sellers-webhook"
+  #   type: "Exact"
 
 #
 # Jobs
