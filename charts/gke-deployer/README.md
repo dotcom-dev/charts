@@ -65,7 +65,6 @@ The command removes all the Kubernetes components associated with the chart and 
 | Name                                            | Description                                                | Default   |
 |-------------------------------------------------|------------------------------------------------------------|-----------|
 | `healthCheckPolicy.enabled`                     | Enable HealthCheckPolicy creation                          | `false`   |
-| `healthCheckPolicy.httpHealthCheck.port`        | Port to check (defaults to service port if empty)          | `""`      |
 | `healthCheckPolicy.httpHealthCheck.requestPath` | Path to check for HTTP health checks                       | `/health` |
 | `healthCheckPolicy.checkIntervalSec`            | Interval between health checks in seconds                  | `10`      |
 | `healthCheckPolicy.timeoutSec`                  | Timeout for each health check in seconds                   | `5`       |
@@ -77,6 +76,8 @@ The Health Check Policy feature creates a GKE HealthCheckPolicy resource that co
 **Important**: The health check policy automatically targets the appropriate resource type:
 - When `serviceExport.enabled` is `false` (default): Targets the regular Kubernetes `Service`
 - When `serviceExport.enabled` is `true`: Targets the `ServiceImport` resource for multi-cluster scenarios
+
+**Port Configuration**: The health check automatically uses the service's named port (defaults to "http"). No explicit port configuration is needed as it uses `USE_NAMED_PORT` specification to reference the port defined in your service.
 
 **Example: Enable basic HTTP health check**
 
@@ -93,7 +94,6 @@ healthCheckPolicy:
 healthCheckPolicy:
   enabled: true
   httpHealthCheck:
-    port: 8080
     requestPath: "/healthz"
   checkIntervalSec: 15
   timeoutSec: 3

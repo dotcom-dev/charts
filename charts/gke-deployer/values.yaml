@@ -240,8 +240,6 @@ healthCheckPolicy:
   enabled: false
   # Health check configuration (HTTP only for now)
   httpHealthCheck:
-    # Port to check (defaults to service port if not specified)
-    port: ""
     # Path to check
     requestPath: "/health"
   # Health check timing configuration

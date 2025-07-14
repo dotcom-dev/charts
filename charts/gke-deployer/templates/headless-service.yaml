@@ -14,9 +14,9 @@ spec:
   clusterIP: None
   ports:
     - protocol: TCP
-      name: http
+      name: {{ include "helpers.portName" . }}
       port: {{ .Values.headlessService.port | default .Values.service.port }}
-      targetPort: http
+      targetPort: {{ include "helpers.portName" . }}
   selector:
     {{- include "helpers.selectorLabels" . | nindent 4 }}
 {{- end }}

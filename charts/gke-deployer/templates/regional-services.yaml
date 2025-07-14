@@ -11,9 +11,9 @@ spec:
   type: {{ .type | default "ClusterIP" }}
   ports:
     - protocol: TCP
-      name: http
+      name: {{ include "helpers.portName" $ }}
       port: {{ $.Values.service.port }}
-      targetPort: http
+      targetPort: {{ include "helpers.portName" $ }}
   selector:
     {{- include "helpers.selectorLabels" $ | nindent 4 }}
 {{- if .serviceExport.enabled }}

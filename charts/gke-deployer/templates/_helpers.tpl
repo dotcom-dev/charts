@@ -72,3 +72,11 @@ This centralizes service name logic to prevent breaking changes when service tem
 {{- define "helpers.serviceName" -}}
     {{- .Values.service.name | default (include "helpers.fullName" .) }}
 {{- end }}
+
+{{/*
+Create the name of the port to use
+This centralizes port name logic to prevent breaking changes when port configuration is modified
+*/}}
+{{- define "helpers.portName" -}}
+    {{- .Values.service.portName | default "http" }}
+{{- end }}

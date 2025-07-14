@@ -48,7 +48,7 @@ spec:
             {{- toYaml .Values.env | nindent 12 }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
+            - name: {{ include "helpers.portName" . }}
               containerPort: {{ .Values.containerPort }}
               protocol: TCP
           livenessProbe:
