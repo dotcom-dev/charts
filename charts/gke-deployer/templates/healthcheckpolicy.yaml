@@ -18,7 +18,12 @@ spec:
     healthyThreshold: {{ .Values.healthCheckPolicy.healthyThreshold }}
     unhealthyThreshold: {{ .Values.healthCheckPolicy.unhealthyThreshold }}
   targetRef:
+    {{- if .Values.serviceExport.enabled }}
+    group: "net.gke.io"
+    kind: ServiceImport
+    {{- else }}
     group: ""
     kind: "Service"
+    {{- end }}
     name: {{ include "helpers.serviceName" . }}
 {{- end }}

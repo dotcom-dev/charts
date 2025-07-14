@@ -74,6 +74,10 @@ The command removes all the Kubernetes components associated with the chart and 
 
 The Health Check Policy feature creates a GKE HealthCheckPolicy resource that configures HTTP load balancer health checks for your service. This is particularly useful for ensuring proper traffic routing and service availability in GKE environments.
 
+**Important**: The health check policy automatically targets the appropriate resource type:
+- When `serviceExport.enabled` is `false` (default): Targets the regular Kubernetes `Service`
+- When `serviceExport.enabled` is `true`: Targets the `ServiceImport` resource for multi-cluster scenarios
+
 **Example: Enable basic HTTP health check**
 
 ```yaml
