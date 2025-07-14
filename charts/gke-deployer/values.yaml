@@ -231,3 +231,9 @@ cronJobs:
   #       command: ["echo", "Scheduled job"]
   #   restartPolicy: OnFailure
   list: []
+
+#
+# Infisical Secret CRD
+#
+infisicalSecretCRD:
+  enabled: false
