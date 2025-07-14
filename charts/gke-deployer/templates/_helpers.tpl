@@ -64,3 +64,11 @@ Create the name of the service account to use
         {{- default "default" .Values.serviceAccount.name }}
     {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the service to use
+This centralizes service name logic to prevent breaking changes when service template is modified
+*/}}
+{{- define "helpers.serviceName" -}}
+    {{- .Values.service.name | default (include "helpers.fullName" .) }}
+{{- end }}

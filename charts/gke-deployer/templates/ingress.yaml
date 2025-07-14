@@ -1,5 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "helpers.fullName" . -}}
+{{- $serviceName := include "helpers.serviceName" . -}}
 {{- $svcPort := .Values.service.port -}}
 
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
@@ -50,23 +51,23 @@ spec:
               {{- if and .backend .backend.service }}
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: {{ .backend.service.name | default $fullName }}
+                name: {{ .backend.service.name | default $serviceName }}
                 port:
                   number: {{ .backend.service.port.number | default $svcPort }}
               {{- else }}
               service:
-                name: {{ .backend.service.name | default $fullName }}
+                name: {{ .backend.service.name | default $serviceName }}
                 port: {{ .backend.service.port.number | default $svcPort }}
               {{- end }}
               {{- else }}
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: {{ $fullName }}
+                name: {{ $serviceName }}
                 port:
                   number: {{ $svcPort }}
               {{- else }}
               service:
-                name: {{ $fullName }}
+                name: {{ $serviceName }}
                 port: {{ $svcPort }}
               {{- end }}
               {{- end }}

@@ -2,7 +2,7 @@
 apiVersion: networking.gke.io/v1
 kind: HealthCheckPolicy
 metadata:
-  name: {{ include "helpers.fullName" . }}-healthcheck
+  name: {{ include "helpers.serviceName" . }}-healthcheck
   labels:
     {{- include "helpers.labels" . | nindent 4 }}
 spec:
@@ -20,5 +20,5 @@ spec:
   targetRef:
     group: ""
     kind: "Service"
-    name: {{ include "helpers.fullName" . }}
+    name: {{ include "helpers.serviceName" . }}
 {{- end }}

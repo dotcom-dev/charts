@@ -18,7 +18,7 @@ spec:
       {{- if and (not .Values.httpRoute.additionalBackends) (not (hasKey .Values.httpRoute "defaultWeight")) }}
       - group: net.gke.io
         kind: ServiceImport
-        name: {{ include "helpers.fullName" . }}
+        name: {{ include "helpers.serviceName" . }}
         port: {{ .Values.service.port }}
       {{- else }}
       # Default service with weight (new behavior)
@@ -28,7 +28,7 @@ spec:
       {{- end }}
       - group: net.gke.io
         kind: ServiceImport
-        name: {{ include "helpers.fullName" . }}
+        name: {{ include "helpers.serviceName" . }}
         port: {{ .Values.service.port }}
         weight: {{ $defaultWeight }}
       # Additional backends

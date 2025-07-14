@@ -2,7 +2,7 @@
 kind: ServiceExport
 apiVersion: net.gke.io/v1
 metadata:
-  name: {{ include "helpers.fullName" . }}
+  name: {{ include "helpers.serviceName" . }}
   {{- if .Values.serviceExport.annotations }}
   annotations:
     {{- toYaml .Values.serviceExport.annotations | nindent 4 }}
