@@ -11,8 +11,7 @@ spec:
     config:
       type: HTTP
       httpHealthCheck:
-        portSpecification: USE_NAMED_PORT
-        portName: {{ include "helpers.portName" . }}
+        portSpecification: USE_SERVING_PORT
         requestPath: {{ .Values.healthCheckPolicy.httpHealthCheck.requestPath }}
     checkIntervalSec: {{ .Values.healthCheckPolicy.checkIntervalSec }}
     timeoutSec: {{ .Values.healthCheckPolicy.timeoutSec }}
