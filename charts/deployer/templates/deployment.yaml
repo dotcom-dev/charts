@@ -45,7 +45,38 @@ spec:
             {{- toYaml .Values.envFrom | nindent 12 }}
           {{- end }}
           env:
+            {{- if .Values.cloudContext.enabled }}
+            # GoWish Cloud Context environment variables
+            - name: GWCC_PROVIDER
+              value: {{ .Values.cloudContext.provider | quote }}
+            {{- if .Values.cloudContext.region }}
+            - name: GWCC_REGION
+              value: {{ .Values.cloudContext.region | quote }}
+            {{- end }}
+            {{- if .Values.cloudContext.regionGroup }}
+            - name: GWCC_REGION_GROUP
+              value: {{ .Values.cloudContext.regionGroup | quote }}
+            {{- end }}
+            {{- if .Values.cloudContext.zone }}
+            - name: GWCC_ZONE
+              value: {{ .Values.cloudContext.zone | quote }}
+            {{- end }}
+            {{- if .Values.cloudContext.clusterName }}
+            - name: GWCC_CLUSTER_NAME
+              value: {{ .Values.cloudContext.clusterName | quote }}
+            {{- end }}
+            - name: GWCC_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: GWCC_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            {{- end }}
+            {{- if .Values.env }}
             {{- toYaml .Values.env | nindent 12 }}
+            {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http

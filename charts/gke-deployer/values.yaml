@@ -259,6 +259,31 @@ healthCheckPolicy:
   unhealthyThreshold: 10
 
 #
+# Cloud Context (GoWish Cloud Context environment variables)
+# Automatically injects GWCC_* environment variables into pods when enabled
+# Environment Variables Injected:
+# - GWCC_PROVIDER: Always injected with the configured provider value
+# - GWCC_REGION: Only injected if cloudContext.region is provided
+# - GWCC_REGION_GROUP: Only injected if cloudContext.regionGroup is provided
+# - GWCC_ZONE: Only injected if cloudContext.zone is provided
+# - GWCC_CLUSTER_NAME: Only injected if cloudContext.clusterName is provided
+# - GWCC_NAMESPACE: Always injected via Kubernetes Downward API (pod's namespace)
+# - GWCC_POD_NAME: Always injected via Kubernetes Downward API (pod's name)
+#
+cloudContext:
+  enabled: true
+  # Cloud provider (e.g., "gcp", "aws", "azure")
+  provider: "gcp"
+  # Cloud region (e.g., "europe-west1", "us-east-1")
+  region: ""
+  # Manual region group override (e.g., "eu", "us", "asia")
+  regionGroup: ""
+  # Availability zone (e.g., "europe-west1-a")
+  zone: ""
+  # Kubernetes cluster name
+  clusterName: ""
+
+#
 # Infisical Secret CRD
 #
 infisicalSecretCRD:
