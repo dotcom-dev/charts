@@ -47,6 +47,64 @@ The command removes all the Kubernetes components associated with the chart and 
 | `fullNameOverride`  | Override the full name of the resources      | `""`            |
 
 
+### Service Account Parameters
+
+| Name                               | Description                                                        | Default |
+|------------------------------------|--------------------------------------------------------------------|---------|
+| `serviceAccount.create`            | Specifies whether a service account should be created              | `true`  |
+| `serviceAccount.annotations`       | Annotations to add to the service account                          | `{}`    |
+| `serviceAccount.name`              | The name of the service account to use (auto-generated if not set) | `""`    |
+| `serviceAccount.gcpServiceAccount` | Google Cloud Service Account email for Workload Identity           | `""`    |
+
+The Service Account feature creates a Kubernetes ServiceAccount for your deployment. When deploying on GKE with Workload Identity enabled, you can associate the Kubernetes ServiceAccount with a Google Cloud Service Account to grant your pods access to GCP resources.
+
+**Example: Basic service account creation**
+
+```yaml
+serviceAccount:
+  create: true
+```
+
+**Example: Use an existing service account**
+
+```yaml
+serviceAccount:
+  create: false
+  name: "my-existing-service-account"
+```
+
+**Example: Service account with Workload Identity (GKE)**
+
+```yaml
+serviceAccount:
+  create: true
+  gcpServiceAccount: "my-app@my-project.iam.gserviceaccount.com"
+```
+
+This will automatically add the `iam.gke.io/gcp-service-account` annotation to the ServiceAccount, which enables [Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity) binding.
+
+**Example: Service account with custom annotations**
+
+```yaml
+serviceAccount:
+  create: true
+  gcpServiceAccount: "my-app@my-project.iam.gserviceaccount.com"
+  annotations:
+    custom-annotation: "custom-value"
+    another-annotation: "another-value"
+```
+
+**Prerequisites for Workload Identity:**
+1. Enable Workload Identity on your GKE cluster
+2. Create a Google Cloud Service Account with the necessary permissions
+3. Bind the Kubernetes ServiceAccount to the GCP Service Account:
+   ```bash
+   gcloud iam service-accounts add-iam-policy-binding \
+     my-app@my-project.iam.gserviceaccount.com \
+     --role roles/iam.workloadIdentityUser \
+     --member "serviceAccount:my-project.svc.id.goog[NAMESPACE/SERVICE_ACCOUNT_NAME]"
+   ```
+
 ### Service Parameters
 
 
