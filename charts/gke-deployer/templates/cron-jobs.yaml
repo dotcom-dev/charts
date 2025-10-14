@@ -19,6 +19,13 @@ spec:
     spec:
       template:
         spec:
+          {{- if or (and $.Values.cronJobs.useServiceAccount (not (hasKey . "serviceAccountName"))) .serviceAccountName }}
+          {{- if .serviceAccountName }}
+          serviceAccountName: {{ .serviceAccountName }}
+          {{- else if (ne .serviceAccountName false) }}
+          serviceAccountName: {{ include "helpers.serviceAccountName" $ }}
+          {{- end }}
+          {{- end }}
           containers:
           {{- toYaml .containers | nindent 12 }}
           {{- if .restartPolicy }}

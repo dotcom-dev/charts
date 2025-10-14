@@ -217,6 +217,8 @@ jobs:
   enabled: false
   # API version for jobs
   apiVersion: "batch/v1"
+  # Use the same service account as the deployment (can be overridden per job)
+  useServiceAccount: true
   # List of one-time jobs to create
   # Example:
   # - name: one-time-job
@@ -225,6 +227,10 @@ jobs:
   #       image: alpine:latest
   #       command: ["echo", "One-time job"]
   #   restartPolicy: Never
+  #   # Optional: Override service account for this specific job
+  #   # serviceAccountName: custom-service-account
+  #   # Optional: Disable service account for this specific job
+  #   # serviceAccountName: false
   list: []
 
 #
@@ -235,6 +241,8 @@ cronJobs:
   enabled: false
   # API version for cronJobs
   apiVersion: "batch/v1"
+  # Use the same service account as the deployment (can be overridden per cronjob)
+  useServiceAccount: true
   # List of scheduled jobs (CronJobs) to create
   # Example:
   # - name: scheduled-job
@@ -244,6 +252,10 @@ cronJobs:
   #       image: alpine:latest
   #       command: ["echo", "Scheduled job"]
   #   restartPolicy: OnFailure
+  #   # Optional: Override service account for this specific cronjob
+  #   # serviceAccountName: custom-service-account
+  #   # Optional: Disable service account for this specific cronjob
+  #   # serviceAccountName: false
   list: []
 
 #

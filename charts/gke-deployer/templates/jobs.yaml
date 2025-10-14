@@ -13,6 +13,13 @@ metadata:
 spec:
   template:
     spec:
+      {{- if or (and $.Values.jobs.useServiceAccount (not (hasKey . "serviceAccountName"))) .serviceAccountName }}
+      {{- if .serviceAccountName }}
+      serviceAccountName: {{ .serviceAccountName }}
+      {{- else if (ne .serviceAccountName false) }}
+      serviceAccountName: {{ include "helpers.serviceAccountName" $ }}
+      {{- end }}
+      {{- end }}
       containers:
       {{- toYaml .containers | nindent 8 }}
       {{- if .restartPolicy }}
