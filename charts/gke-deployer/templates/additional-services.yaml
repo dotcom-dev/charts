@@ -12,9 +12,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- with .spec }}
-    {{- toYaml . | nindent 2 }}
-  {{- end }}
+  type: {{ .type | default "ClusterIP" }}
   {{- if .useServicePorts }}
   ports:
     - protocol: TCP
