@@ -13,6 +13,9 @@ metadata:
   {{- end }}
 spec:
   type: {{ .type | default "ClusterIP" }}
+  {{- with .loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
   {{- if .useServicePorts }}
   ports:
     - protocol: TCP

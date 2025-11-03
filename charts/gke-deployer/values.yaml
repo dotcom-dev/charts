@@ -117,6 +117,7 @@ additionalServices: []
 #   type: ClusterIP # Optional: defaults to ClusterIP
 #   useDeploymentSelector: true # Optional: set to true to select deployment pods
 #   useServicePorts: true # Optional: set to true to use the same port config as main service
+#   loadBalancerIP: "" # Optional: specific IP for LoadBalancer type
 #   annotations: {} # Optional: service annotations
 
 #
