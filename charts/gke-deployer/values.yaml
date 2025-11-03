@@ -110,13 +110,13 @@ headlessService:
 
 additionalServices: []
 # Create additional services with custom configurations.
+# Services automatically inherit standard chart labels.
 # The service spec is appended directly, allowing full flexibility.
 #
 # Structure:
 # - name: service-name # Required
 #   useDeploymentSelector: true # Optional: set to true to select deployment pods
 #   useServicePorts: true # Optional: set to true to use the same port configuration as the main service
-#   labels: {} # Optional: custom labels for the service
 #   annotations: {} # Optional: service annotations
 #   spec: # Required: service spec (standard Kubernetes service spec)
 #     type: LoadBalancer
