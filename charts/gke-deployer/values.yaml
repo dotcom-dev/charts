@@ -109,6 +109,18 @@ headlessService:
   # Port defaults to the same port as the regular service if not specified
 
 additionalServices: []
+# Create additional services with custom configurations.
+# The service spec is appended directly, allowing full flexibility.
+#
+# Structure:
+# - name: service-name # Required
+#   useDeploymentSelector: true # Optional: set to true to select deployment pods
+#   labels: {} # Optional: custom labels for the service
+#   annotations: {}                      # Optional: service annotations
+#   spec: # Required: service spec (standard Kubernetes service spec)
+#     type: LoadBalancer
+#     ports: [...]
+#     # ... any other service spec fields
 
 #
 # Service Export (Multi-cluster services)
