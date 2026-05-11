@@ -219,6 +219,19 @@ httpRoute:
   # - path: "/api/integrations/serpscale-import-sellers-webhook"
   #   type: "Exact"
 
+# Additional HTTPRoutes sharing the same gateway as httpRoute above.
+# Use this for webhook endpoints or secondary routing needs.
+additionalHttpRoutes: []
+# - name: stripe-webhook           # Required. Appended to release name: <release>-stripe-webhook.
+#   hostnames:
+#     - webhooks.example.com
+#   paths:
+#     - path: /webhooks/stripe
+#       type: Prefix               # Prefix or Exact. Defaults to Prefix.
+#   backendService: ""             # Defaults to main service. Set to route to an additionalService.
+#   port: 3000                     # Defaults to service.port.
+#   backendKind: ServiceImport     # ServiceImport (default, multi-cluster) or Service (cluster-local).
+
 #
 # Jobs
 #

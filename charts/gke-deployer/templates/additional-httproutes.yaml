@@ -1,0 +1,35 @@
+{{- if .Values.additionalHttpRoutes }}
+{{- range .Values.additionalHttpRoutes }}
+---
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: {{ include "helpers.fullName" $ }}-{{ .name }}
+  labels:
+    {{- include "helpers.labels" $ | nindent 4 }}
+    gateway: {{ $.Values.httpRoute.gatewayName }}
+spec:
+  parentRefs:
+    - kind: Gateway
+      namespace: {{ $.Values.httpRoute.gatewayNamespace }}
+      name: {{ $.Values.httpRoute.gatewayName }}
+  hostnames:
+    {{- range .hostnames }}
+    - {{ . | quote }}
+    {{- end }}
+  rules:
+    - {{- if .paths }}
+      matches:
+        {{- range .paths }}
+        - path:
+            type: {{ .type | default "Prefix" }}
+            value: {{ .path | quote }}
+        {{- end }}
+      {{- end }}
+      backendRefs:
+        - group: {{ if eq (.backendKind | default "ServiceImport") "Service" }}""{{ else }}net.gke.io{{ end }}
+          kind: {{ .backendKind | default "ServiceImport" }}
+          name: {{ .backendService | default (include "helpers.serviceName" $) }}
+          port: {{ .port | default $.Values.service.port }}
+{{- end }}
+{{- end }}
