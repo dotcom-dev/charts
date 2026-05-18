@@ -7,12 +7,12 @@ metadata:
   name: {{ include "helpers.fullName" $ }}-{{ .name }}
   labels:
     {{- include "helpers.labels" $ | nindent 4 }}
-    gateway: {{ $.Values.httpRoute.gatewayName }}
+    gateway: {{ .gatewayName | default $.Values.httpRoute.gatewayName }}
 spec:
   parentRefs:
     - kind: Gateway
-      namespace: {{ $.Values.httpRoute.gatewayNamespace }}
-      name: {{ $.Values.httpRoute.gatewayName }}
+      namespace: {{ .gatewayNamespace | default $.Values.httpRoute.gatewayNamespace }}
+      name: {{ .gatewayName | default $.Values.httpRoute.gatewayName }}
   hostnames:
     {{- range .hostnames }}
     - {{ . | quote }}
@@ -22,7 +22,7 @@ spec:
       matches:
         {{- range .paths }}
         - path:
-            type: {{ .type | default "Prefix" }}
+            type: {{ .type | default "PathPrefix" }}
             value: {{ .path | quote }}
         {{- end }}
       {{- end }}
