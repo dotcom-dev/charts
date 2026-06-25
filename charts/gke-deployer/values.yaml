@@ -104,10 +104,6 @@ service:
   port: 3000
 
 # Headless service configuration
-headlessService:
-  enabled: false
-  # Port defaults to the same port as the regular service if not specified
-
 additionalServices: []
 # Create additional services with custom configurations.
 # Services automatically inherit standard chart labels.
@@ -166,8 +162,6 @@ ingress:
 #    - secretName: chart-example-tls
 #      hosts:
 #        - chart-example.local
-
-additionalIngresses: []
 
 networkPolicy:
   enabled: false
